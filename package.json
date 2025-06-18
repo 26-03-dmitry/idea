@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "next build && gh-pages -d out -t"
+    "deploy": "next build && node scripts/gh-pages-redirect.js && gh-pages -d out -t"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.1",
