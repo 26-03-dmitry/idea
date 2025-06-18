@@ -59,7 +59,6 @@ const MapSearch = ({ lang }: { lang: string }) => {
             polyline: false,
           }}
           edit={{
-            featureGroup: new L.FeatureGroup(),
             edit: false,
             remove: true
           }}

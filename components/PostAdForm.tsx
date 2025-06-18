@@ -124,13 +124,81 @@ const Step1 = ({ onNext, formData, setFormData, lang }: { onNext: () => void, fo
   )
 };
 
-// Шаг 2: Детали (пока заглушка)
-const Step2 = ({ onBack, formData }: { onBack: () => void, formData: any }) => (
-    <div>
-        <h2 className="text-xl font-semibold mb-4">2. Детали объекта</h2>
-        <p className="mb-4">Здесь будут поля для площади, комнат, описания и т.д.</p>
+// Шаг 2: Детали
+const Step2 = ({ onBack, onNext, formData, setFormData }: { onBack: () => void, onNext: () => void, formData: any, setFormData: any }) => {
+    
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev: any) => ({ ...prev, [name]: value }));
+    };
+
+    return (
+        <div>
+            <h2 className="text-xl font-semibold mb-6 border-b pb-3">2. Детали объекта</h2>
+            <div className="space-y-6">
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label htmlFor="areaTotal" className="block text-sm font-medium text-gray-700">Общая площадь (м²)</label>
+                        <input type="number" name="areaTotal" id="areaTotal" value={formData.areaTotal || ''} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                    </div>
+                    <div>
+                        <label htmlFor="areaLiving" className="block text-sm font-medium text-gray-700">Жилая площадь (м²)</label>
+                        <input type="number" name="areaLiving" id="areaLiving" value={formData.areaLiving || ''} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                    </div>
+                    <div>
+                        <label htmlFor="areaKitchen" className="block text-sm font-medium text-gray-700">Площадь кухни (м²)</label>
+                        <input type="number" name="areaKitchen" id="areaKitchen" value={formData.areaKitchen || ''} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                     <div>
+                        <label htmlFor="rooms" className="block text-sm font-medium text-gray-700">Количество комнат</label>
+                        <input type="number" name="rooms" id="rooms" value={formData.rooms || ''} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                    </div>
+                    <div>
+                        <label htmlFor="floor" className="block text-sm font-medium text-gray-700">Этаж</label>
+                        <input type="number" name="floor" id="floor" value={formData.floor || ''} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                    </div>
+                    <div>
+                        <label htmlFor="floorTotal" className="block text-sm font-medium text-gray-700">Этажей в доме</label>
+                        <input type="number" name="floorTotal" id="floorTotal" value={formData.floorTotal || ''} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                    </div>
+                </div>
+                
+                 <div>
+                    <label htmlFor="condition" className="block text-sm font-medium text-gray-700">Состояние</label>
+                    <select id="condition" name="condition" value={formData.condition || ''} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option>Новый ремонт</option>
+                        <option>Хорошее</option>
+                        <option>Среднее</option>
+                        <option>Требует ремонта</option>
+                        <option>Черный каркас</option>
+                        <option>Белый каркас</option>
+                    </select>
+                </div>
+
+            </div>
+            <div className="mt-8 flex justify-between">
+                <button onClick={onBack} className="py-2 px-6 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    Назад
+                </button>
+                <button onClick={onNext} className="py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700">
+                    Далее
+                </button>
+            </div>
+        </div>
+    );
+}
+
+// Шаг 3 (пока заглушка)
+const Step3 = ({ onBack, formData }: { onBack: () => void, formData: any }) => (
+     <div>
+        <h2 className="text-xl font-semibold mb-4">3. Фотографии и описание</h2>
+        <p className="mb-4">Здесь будет загрузка фото и ввод текста объявления.</p>
         <div className="bg-gray-50 p-4 rounded-md text-sm">
-            <h3 className="font-semibold">Данные с Шага 1:</h3>
+            <h3 className="font-semibold">Собранные данные:</h3>
             <pre className="mt-2 whitespace-pre-wrap">
                 {JSON.stringify(formData, null, 2)}
             </pre>
@@ -144,8 +212,7 @@ const Step2 = ({ onBack, formData }: { onBack: () => void, formData: any }) => (
             </button>
         </div>
     </div>
-);
-
+)
 
 const PostAdForm = ({ lang }: { lang: string }) => {
   const [step, setStep] = useState(1);
@@ -155,19 +222,24 @@ const PostAdForm = ({ lang }: { lang: string }) => {
     city: '',
     street: '',
     houseNumber: '',
-    coordinates: { lat: 41.7151, lng: 44.8271 }
+    coordinates: { lat: 41.7151, lng: 44.8271 },
+    areaTotal: '',
+    areaLiving: '',
+    areaKitchen: '',
+    rooms: '',
+    floor: '',
+    floorTotal: '',
+    condition: 'Хорошее'
   });
 
-  const nextStep = () => {
-      console.log('Form data on step 1 -> 2:', formData);
-      setStep(s => s + 1);
-  }
+  const nextStep = () => setStep(s => s + 1);
   const prevStep = () => setStep(s => s - 1);
 
   return (
     <div className="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-lg shadow-md border border-gray-100">
       {step === 1 && <Step1 onNext={nextStep} formData={formData} setFormData={setFormData} lang={lang} />}
-      {step === 2 && <Step2 onBack={prevStep} formData={formData} />}
+      {step === 2 && <Step2 onBack={prevStep} onNext={nextStep} formData={formData} setFormData={setFormData} />}
+      {step === 3 && <Step3 onBack={prevStep} formData={formData} />}
     </div>
   );
 };
