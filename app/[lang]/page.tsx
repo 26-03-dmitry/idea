@@ -137,7 +137,7 @@ export default async function Page({ params: { lang } }: { params: { lang: strin
             Поиск по карте
            </h2>
           <div className="border rounded-sm overflow-hidden">
-            <MapSearch />
+            <MapSearch lang={lang} />
           </div>
         </div>
       </section>

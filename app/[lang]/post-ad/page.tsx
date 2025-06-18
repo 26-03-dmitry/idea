@@ -11,7 +11,7 @@ export default async function PostAdPage({ params: { lang } }: { params: { lang:
       <Header lang={lang} dict={dict.header} />
       <main className="bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <PostAdForm />
+          <PostAdForm lang={lang} />
         </div>
       </main>
     </>

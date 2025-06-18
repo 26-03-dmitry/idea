@@ -16,7 +16,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
 });
 
-const MapSearch = () => {
+const MapSearch = ({ lang }: { lang: string }) => {
   const onCreated = (e: any) => {
     const { layerType, layer } = e;
     if (layerType === 'rectangle') {
@@ -30,6 +30,11 @@ const MapSearch = () => {
     // Можно добавить обработку для других фигур (polygon, circle)
   };
 
+  const apiKey = 'fFwC9Atmm5nOTMrzWgR8';
+  const mapLang = ['ka', 'en', 'ru'].includes(lang) ? lang : 'en';
+  const tileUrl = `https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${apiKey}&lang=${mapLang}`;
+  const attribution = '&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+
   return (
     <MapContainer 
       center={[41.7151, 44.8271]} // Центр карты - Тбилиси
@@ -37,8 +42,9 @@ const MapSearch = () => {
       style={{ height: '400px', width: '100%' }}
     >
       <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        key={tileUrl}
+        url={tileUrl}
+        attribution={attribution}
       />
       <FeatureGroup>
         <EditControl

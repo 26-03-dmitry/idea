@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 // Динамический импорт карты с отключением SSR
@@ -11,15 +11,53 @@ const LocationPickerMap = dynamic(
 
 
 // Шаг 1: Тип и местоположение
-const Step1 = ({ onNext, formData, setFormData }: { onNext: () => void, formData: any, setFormData: any }) => {
+const Step1 = ({ onNext, formData, setFormData, lang }: { onNext: () => void, formData: any, setFormData: any, lang: string }) => {
   
+  const [isGeocoding, setIsGeocoding] = useState(false);
+
+  // --- ВСЯ ЛОГИКА ТЕПЕРЬ ЗДЕСЬ ---
+  const apiKey = 'fFwC9Atmm5nOTMrzWgR8';
+  const mapLang = ['ka', 'en', 'ru'].includes(lang) ? lang : 'en'; 
+  const tileUrl = `https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${apiKey}&lang=${mapLang}`;
+  const attribution = '&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+
+  const handlePositionChange = (newPos: [number, number]) => {
+      setFormData((prev: any) => ({
+          ...prev,
+          coordinates: { lat: newPos[0], lng: newPos[1] }
+      }));
+  };
+
+  useEffect(() => {
+    const fetchAddress = async () => {
+        setIsGeocoding(true);
+        try {
+            const { lat, lng } = formData.coordinates;
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&accept-language=${lang}`);
+            const data = await response.json();
+            const address = data.address || {};
+            setFormData((prev: any) => ({
+                ...prev,
+                city: address.city || address.town || address.village || prev.city,
+                street: address.road || '',
+                houseNumber: address.house_number || address.house_name || ''
+            }));
+        } catch (error) {
+            console.error("Failed to fetch address:", error);
+        } finally {
+            setIsGeocoding(false);
+        }
+    };
+    
+    // Выполняем запрос только если есть координаты
+    if (formData.coordinates) {
+        fetchAddress();
+    }
+  }, [formData.coordinates, lang, setFormData]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev: any) => ({ ...prev, [name]: value }));
-  };
-  
-  const handleLocationSelect = (coords: { lat: number, lng: number }) => {
-    setFormData((prev: any) => ({ ...prev, coordinates: coords }));
   };
 
   return (
@@ -65,7 +103,16 @@ const Step1 = ({ onNext, formData, setFormData }: { onNext: () => void, formData
 
         <div>
           <h3 className="text-md font-medium text-gray-800">Укажите на карте</h3>
-          <LocationPickerMap onLocationSelect={handleLocationSelect} />
+           <p className="text-sm text-gray-600 mb-2">Кликните на карту, чтобы указать точное расположение. Адрес определится автоматически.</p>
+          <LocationPickerMap 
+            initialPosition={[formData.coordinates.lat, formData.coordinates.lng]}
+            onPositionChange={handlePositionChange}
+            tileUrl={tileUrl}
+            attribution={attribution}
+          />
+           <div className="mt-2 text-xs text-gray-500 h-4">
+            {isGeocoding && 'Определение адреса...'}
+          </div>
         </div>
       </div>
       <div className="mt-8">
@@ -100,7 +147,7 @@ const Step2 = ({ onBack, formData }: { onBack: () => void, formData: any }) => (
 );
 
 
-const PostAdForm = () => {
+const PostAdForm = ({ lang }: { lang: string }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     propertyType: 'Квартира',
@@ -119,7 +166,7 @@ const PostAdForm = () => {
 
   return (
     <div className="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-lg shadow-md border border-gray-100">
-      {step === 1 && <Step1 onNext={nextStep} formData={formData} setFormData={setFormData} />}
+      {step === 1 && <Step1 onNext={nextStep} formData={formData} setFormData={setFormData} lang={lang} />}
       {step === 2 && <Step2 onBack={prevStep} formData={formData} />}
     </div>
   );
