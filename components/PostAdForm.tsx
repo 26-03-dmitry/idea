@@ -1,0 +1,128 @@
+'use client'
+
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+
+// Динамический импорт карты с отключением SSR
+const LocationPickerMap = dynamic(
+  () => import('@/components/LocationPickerMap'),
+  { ssr: false }
+);
+
+
+// Шаг 1: Тип и местоположение
+const Step1 = ({ onNext, formData, setFormData }: { onNext: () => void, formData: any, setFormData: any }) => {
+  
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev: any) => ({ ...prev, [name]: value }));
+  };
+  
+  const handleLocationSelect = (coords: { lat: number, lng: number }) => {
+    setFormData((prev: any) => ({ ...prev, coordinates: coords }));
+  };
+
+  return (
+    <div>
+      <h2 className="text-xl font-semibold mb-6 border-b pb-3">1. Основная информация и адрес</h2>
+      <div className="space-y-6">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700">Что вы хотите опубликовать?</label>
+            <select id="propertyType" name="propertyType" value={formData.propertyType} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+              <option>Квартира</option>
+              <option>Дом</option>
+              <option>Гараж</option>
+              <option>Земельный участок</option>
+              <option>Коммерческая недвижимость</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="dealType" className="block text-sm font-medium text-gray-700">Тип сделки</label>
+            <select id="dealType" name="dealType" value={formData.dealType} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+              <option>Продажа</option>
+              <option>Аренда</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="city" className="block text-sm font-medium text-gray-700">Населенный пункт</label>
+          <input type="text" name="city" id="city" value={formData.city} onChange={handleInputChange} placeholder="Например, Тбилиси" className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="md:col-span-2">
+                <label htmlFor="street" className="block text-sm font-medium text-gray-700">Улица</label>
+                <input type="text" name="street" id="street" value={formData.street} onChange={handleInputChange} placeholder="Проспект Чавчавадзе" className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            </div>
+            <div>
+                <label htmlFor="houseNumber" className="block text-sm font-medium text-gray-700">Номер дома</label>
+                <input type="text" name="houseNumber" id="houseNumber" value={formData.houseNumber} onChange={handleInputChange} placeholder="37" className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            </div>
+        </div>
+
+        <div>
+          <h3 className="text-md font-medium text-gray-800">Укажите на карте</h3>
+          <LocationPickerMap onLocationSelect={handleLocationSelect} />
+        </div>
+      </div>
+      <div className="mt-8">
+        <button onClick={onNext} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+          Перейти к шагу 2
+        </button>
+      </div>
+    </div>
+  )
+};
+
+// Шаг 2: Детали (пока заглушка)
+const Step2 = ({ onBack, formData }: { onBack: () => void, formData: any }) => (
+    <div>
+        <h2 className="text-xl font-semibold mb-4">2. Детали объекта</h2>
+        <p className="mb-4">Здесь будут поля для площади, комнат, описания и т.д.</p>
+        <div className="bg-gray-50 p-4 rounded-md text-sm">
+            <h3 className="font-semibold">Данные с Шага 1:</h3>
+            <pre className="mt-2 whitespace-pre-wrap">
+                {JSON.stringify(formData, null, 2)}
+            </pre>
+        </div>
+        <div className="mt-6 flex justify-between">
+            <button onClick={onBack} className="py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                Назад
+            </button>
+            <button className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700">
+                Завершить
+            </button>
+        </div>
+    </div>
+);
+
+
+const PostAdForm = () => {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    propertyType: 'Квартира',
+    dealType: 'Продажа',
+    city: '',
+    street: '',
+    houseNumber: '',
+    coordinates: { lat: 41.7151, lng: 44.8271 }
+  });
+
+  const nextStep = () => {
+      console.log('Form data on step 1 -> 2:', formData);
+      setStep(s => s + 1);
+  }
+  const prevStep = () => setStep(s => s - 1);
+
+  return (
+    <div className="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-lg shadow-md border border-gray-100">
+      {step === 1 && <Step1 onNext={nextStep} formData={formData} setFormData={setFormData} />}
+      {step === 2 && <Step2 onBack={prevStep} formData={formData} />}
+    </div>
+  );
+};
+
+export default PostAdForm; 

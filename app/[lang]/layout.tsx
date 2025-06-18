@@ -1,22 +1,29 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
+import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
+// Это нужно, чтобы Next.js знал о всех возможных языках
+export async function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'ru' }, { lang: 'ka' }]
+}
+
 export const metadata: Metadata = {
-  title: 'Georgia Estate - Недвижимость в Грузии',
+  title: 'idealista.ge - Недвижимость в Грузии',
   description: 'Найдите идеальную недвижимость в Грузии. Квартиры, дома, коммерческая недвижимость в Тбилиси, Батуми и других городах.',
   keywords: 'недвижимость Грузия, квартиры Тбилиси, дома Батуми, купить квартиру Грузия',
 }
 
 export default function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode
+  params: { lang: string }
 }) {
   return (
-    <html lang="ka">
+    <html lang={params.lang}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

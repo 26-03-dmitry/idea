@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { Search, MapPin, ChevronDown } from 'lucide-react'
 
-const SearchForm = () => {
+const SearchForm = ({ dict }: { dict: any }) => {
   const [searchType, setSearchType] = useState('buy')
   const [location, setLocation] = useState('')
   const [searchText, setSearchText] = useState('')
@@ -33,7 +33,7 @@ const SearchForm = () => {
               : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
           }`}
         >
-          Купить
+          {dict.buy}
         </button>
         <button
           onClick={() => setSearchType('rent')}
@@ -43,7 +43,7 @@ const SearchForm = () => {
               : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
           }`}
         >
-          Аренда
+          {dict.rent}
         </button>
       </div>
 
@@ -56,7 +56,7 @@ const SearchForm = () => {
               <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
               <input
                 type="text"
-                placeholder="Поиск по городу, району, улице..."
+                placeholder={dict.placeholder}
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-sm focus:ring-1 focus:ring-primary-500 focus:border-primary-500 outline-none text-gray-900"
@@ -73,7 +73,7 @@ const SearchForm = () => {
                 onChange={(e) => setLocation(e.target.value)}
                 className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-sm focus:ring-1 focus:ring-primary-500 focus:border-primary-500 outline-none appearance-none bg-white text-gray-900"
               >
-                <option value="">Вся Грузия</option>
+                <option value="">{dict.allGeorgia}</option>
                 {cities.map((city) => (
                   <option key={city} value={city}>
                     {city}
@@ -87,7 +87,7 @@ const SearchForm = () => {
           {/* Кнопка поиска */}
           <button className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-sm font-medium transition-colors flex items-center justify-center space-x-2 lg:w-auto">
             <Search className="h-5 w-5" />
-            <span>Поиск</span>
+            <span>{dict.search}</span>
           </button>
         </div>
 
@@ -95,20 +95,20 @@ const SearchForm = () => {
         <div className="mt-4 pt-4 border-t border-gray-200">
           <div className="flex flex-wrap gap-4 text-sm">
             <button className="text-primary-600 hover:text-primary-700 font-medium">
-              + Расширенный поиск
+              {dict.advancedSearch}
             </button>
             <span className="text-gray-400">|</span>
             <button className="text-gray-600 hover:text-primary-600">
-              Дома
+              {dict.houses}
             </button>
             <button className="text-gray-600 hover:text-primary-600">
-              Квартиры  
+              {dict.apartments}
             </button>
             <button className="text-gray-600 hover:text-primary-600">
-              Новостройки
+              {dict.newBuildings}
             </button>
             <button className="text-gray-600 hover:text-primary-600">
-              У моря
+              {dict.byTheSea}
             </button>
           </div>
         </div>

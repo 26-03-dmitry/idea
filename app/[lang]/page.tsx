@@ -4,6 +4,12 @@ import React from 'react'
 import Header from '@/components/Header'
 import SearchForm from '@/components/SearchForm'
 import PropertyCard from '@/components/PropertyCard'
+import dynamic from 'next/dynamic'
+import { getDictionary } from '@/lib/dictionary'
+
+const MapSearch = dynamic(() => import('@/components/MapSearch'), { 
+  ssr: false 
+});
 
 // Мокданные для недвижимости в стиле Idealista
 const sampleProperties = [
@@ -98,10 +104,12 @@ const sampleProperties = [
   }
 ]
 
-const HomePage = () => {
+export default async function Page({ params: { lang } }: { params: { lang: string } }) {
+  const dict = await getDictionary(lang);
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      <Header lang={lang} dict={dict.header} />
       
       {/* Hero секция - упрощенная */}
       <section className="bg-white py-12">
@@ -116,9 +124,21 @@ const HomePage = () => {
       </section>
 
       {/* Форма поиска */}
-      <section className="relative z-20 pb-8">
+      <section className="relative z-10 pb-8 -mt-16">
         <div className="max-w-5xl mx-auto">
-          <SearchForm />
+          <SearchForm dict={dict.searchForm} />
+        </div>
+      </section>
+
+      {/* Секция с картой */}
+      <section className="pb-8">
+        <div className="max-w-6xl mx-auto px-4">
+           <h2 className="text-xl font-medium text-gray-900 mb-4">
+            Поиск по карте
+           </h2>
+          <div className="border rounded-sm overflow-hidden">
+            <MapSearch />
+          </div>
         </div>
       </section>
 
@@ -211,6 +231,4 @@ const HomePage = () => {
       </footer>
     </div>
   )
-}
-
-export default HomePage 
+} 

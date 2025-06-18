@@ -1,0 +1,24 @@
+{
+  "buy": "Buy",
+  "rent": "Rent",
+  "header": {
+    "buy": "Buy",
+    "rent": "Rent",
+    "share": "Share",
+    "myArea": "My area",
+    "signIn": "Sign in",
+    "placeAd": "Place an ad"
+  },
+  "searchForm": {
+    "buy": "Buy",
+    "rent": "Rent",
+    "placeholder": "Search by city, district, street...",
+    "allGeorgia": "All Georgia",
+    "search": "Search",
+    "advancedSearch": "+ Advanced search",
+    "houses": "Houses",
+    "apartments": "Apartments",
+    "newBuildings": "New buildings",
+    "byTheSea": "By the sea"
+  }
+} 
