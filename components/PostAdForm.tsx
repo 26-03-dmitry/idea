@@ -138,7 +138,9 @@ const Step2 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
 
         // Cleanup object URLs on component unmount
         return () => {
-            newImagePreviews.forEach(url => URL.revokeObjectURL(url));
+            if (Array.isArray(newImagePreviews)) {
+                newImagePreviews.forEach(url => URL.revokeObjectURL(url));
+            }
             if (videoPreview) {
                 URL.revokeObjectURL(videoPreview);
             }
@@ -153,8 +155,9 @@ const Step2 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
     };
     
     const handleVideoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setFormData((prev: any) => ({ ...prev, video: e.target.files[0] }));
+        const files = e.target.files;
+        if (files && files[0]) {
+            setFormData((prev: any) => ({ ...prev, video: files[0] }));
         }
     };
 
