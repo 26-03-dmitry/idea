@@ -14,7 +14,7 @@ export default async function PostAdPage({ params: { lang } }: { params: { lang:
           <h1 className="text-3xl md:text-4xl font-normal text-gray-900 mb-8 text-center">
             {dict.postAdPage.title}
           </h1>
-          <PostAdForm dict={dict} />
+          <PostAdForm dict={dict} lang={lang} />
         </div>
       </main>
     </div>
