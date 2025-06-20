@@ -20,5 +20,8 @@
     "apartments": "Apartments",
     "newBuildings": "New buildings",
     "byTheSea": "By the sea"
+  },
+  "postAdPage": {
+    "title": "Place your ad for free"
   }
 } 
