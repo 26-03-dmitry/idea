@@ -8,7 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "next build && node scripts/gh-pages-redirect.js && gh-pages -d out -t"
+    "deploy": "next build && touch out/.nojekyll && node scripts/gh-pages-redirect.js && gh-pages -d out -t",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.1",

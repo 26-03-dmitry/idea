@@ -21,11 +21,11 @@ const Header = ({ lang, dict }: { lang: string, dict: any }) => {
           {/* Левая часть: Лого и основные ссылки */}
           <div className="flex items-center">
             {/* Лого как у Idealista */}
-            <a href={`/${lang}`} className="flex items-center space-x-2">
+            <Link href={`/${lang}/`} className="flex items-center space-x-2">
               <span className="text-xl font-bold text-gray-900">
                 idealista<span className="text-primary-600">.ge</span>
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Главная навигация */}
@@ -51,7 +51,7 @@ const Header = ({ lang, dict }: { lang: string, dict: any }) => {
                 {locales.map((locale, index) => (
                   <React.Fragment key={locale.code}>
                     <Link
-                      href={`/${locale.code}`}
+                      href={`/${locale.code}/`}
                       className={`px-2 text-sm font-medium ${
                         lang === locale.code ? 'text-primary-600' : 'text-gray-500 hover:text-gray-800'
                       }`}
@@ -66,7 +66,7 @@ const Header = ({ lang, dict }: { lang: string, dict: any }) => {
               <button className="p-2 text-gray-600 hover:text-primary-600 transition-colors">
                 <Heart className="h-5 w-5" />
               </button>
-              <Link href={`/${lang}/post-ad`} className="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors">
+              <Link href={`/${lang}/post-ad/`} className="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors">
                 {dict.placeAd}
               </Link>
               <button className="flex items-center space-x-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-sm hover:bg-gray-50 transition-colors text-sm">
@@ -112,7 +112,7 @@ const Header = ({ lang, dict }: { lang: string, dict: any }) => {
                 <button className="p-2 text-gray-600 hover:text-primary-600 transition-colors">
                   <Heart className="h-5 w-5" />
                 </button>
-                <Link href={`/${lang}/post-ad`} className="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors">
+                <Link href={`/${lang}/post-ad/`} className="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors">
                   {dict.placeAd}
                 </Link>
                 <button className="flex items-center space-x-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-sm hover:bg-gray-50 transition-colors text-sm">

@@ -66,7 +66,8 @@ const Step1 = ({ dict, onNext, formData, setFormData, lang }: { dict: any, onNex
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700">{dict.what_to_publish}</label>
-            <select id="propertyType" name="propertyType" value={formData.propertyType} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+            <select id="propertyType" name="propertyType" value={formData.propertyType} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-50">
+              <option>{dict.room}</option>
               <option>{dict.apartment}</option>
               <option>{dict.house}</option>
               <option>{dict.garage}</option>
@@ -76,7 +77,7 @@ const Step1 = ({ dict, onNext, formData, setFormData, lang }: { dict: any, onNex
           </div>
           <div>
             <label htmlFor="dealType" className="block text-sm font-medium text-gray-700">{dict.deal_type}</label>
-            <select id="dealType" name="dealType" value={formData.dealType} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+            <select id="dealType" name="dealType" value={formData.dealType} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-50">
               <option>{dict.sale}</option>
               <option>{dict.rent}</option>
             </select>
@@ -85,17 +86,17 @@ const Step1 = ({ dict, onNext, formData, setFormData, lang }: { dict: any, onNex
 
         <div>
           <label htmlFor="city" className="block text-sm font-medium text-gray-700">{dict.city}</label>
-          <input type="text" name="city" id="city" value={formData.city} onChange={handleInputChange} placeholder={dict.city_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+          <input type="text" name="city" id="city" value={formData.city} onChange={handleInputChange} placeholder={dict.city_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-50" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="md:col-span-2">
                 <label htmlFor="street" className="block text-sm font-medium text-gray-700">{dict.street}</label>
-                <input type="text" name="street" id="street" value={formData.street} onChange={handleInputChange} placeholder={dict.street_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <input type="text" name="street" id="street" value={formData.street} onChange={handleInputChange} placeholder={dict.street_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-50" />
             </div>
             <div>
                 <label htmlFor="houseNumber" className="block text-sm font-medium text-gray-700">{dict.house_number}</label>
-                <input type="text" name="houseNumber" id="houseNumber" value={formData.houseNumber} onChange={handleInputChange} placeholder={dict.house_number_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <input type="text" name="houseNumber" id="houseNumber" value={formData.houseNumber} onChange={handleInputChange} placeholder={dict.house_number_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-50" />
             </div>
         </div>
 
@@ -238,7 +239,7 @@ const Step2 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
                 {/* Description */}
                 <div>
                     <label htmlFor="description" className="block text-sm font-medium text-gray-700">{dict.description}</label>
-                    <textarea id="description" name="description" rows={5} value={formData.description} onChange={handleInputChange} placeholder={dict.description_placeholder} className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"></textarea>
+                    <textarea id="description" name="description" rows={5} value={formData.description} onChange={handleInputChange} placeholder={dict.description_placeholder} className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 bg-gray-50"></textarea>
                 </div>
             </div>
         </div>
@@ -260,36 +261,36 @@ const Step3 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                         <label htmlFor="totalArea" className="block text-sm font-medium text-gray-700">{dict.total_area}</label>
-                        <input type="number" name="totalArea" id="totalArea" value={formData.totalArea} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                        <input type="number" name="totalArea" id="totalArea" value={formData.totalArea} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-50" />
                     </div>
                     <div>
                         <label htmlFor="livingArea" className="block text-sm font-medium text-gray-700">{dict.living_area}</label>
-                        <input type="number" name="livingArea" id="livingArea" value={formData.livingArea} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                        <input type="number" name="livingArea" id="livingArea" value={formData.livingArea} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-50" />
                     </div>
                     <div>
                         <label htmlFor="kitchenArea" className="block text-sm font-medium text-gray-700">{dict.kitchen_area}</label>
-                        <input type="number" name="kitchenArea" id="kitchenArea" value={formData.kitchenArea} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                        <input type="number" name="kitchenArea" id="kitchenArea" value={formData.kitchenArea} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-50" />
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                      <div>
                         <label htmlFor="rooms" className="block text-sm font-medium text-gray-700">{dict.rooms}</label>
-                        <input type="number" name="rooms" id="rooms" value={formData.rooms} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                        <input type="number" name="rooms" id="rooms" value={formData.rooms} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-50" />
                     </div>
                     <div>
                         <label htmlFor="floor" className="block text-sm font-medium text-gray-700">{dict.floor}</label>
-                        <input type="number" name="floor" id="floor" value={formData.floor} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                        <input type="number" name="floor" id="floor" value={formData.floor} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-50" />
                     </div>
                     <div>
                         <label htmlFor="totalFloors" className="block text-sm font-medium text-gray-700">{dict.total_floors}</label>
-                        <input type="number" name="totalFloors" id="totalFloors" value={formData.totalFloors} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                        <input type="number" name="totalFloors" id="totalFloors" value={formData.totalFloors} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-50" />
                     </div>
                 </div>
                 
                  <div>
                     <label htmlFor="condition" className="block text-sm font-medium text-gray-700">{dict.condition}</label>
-                    <select id="condition" name="condition" value={formData.condition} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                    <select id="condition" name="condition" value={formData.condition} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-50">
                         <option>{dict.condition_new}</option>
                         <option>{dict.condition_good}</option>
                         <option>{dict.condition_medium}</option>
@@ -342,13 +343,12 @@ const PostAdForm = ({ dict, lang }: { dict: any, lang: string }) => {
   return (
     <div className="bg-white p-6 sm:p-8 rounded-sm border">
       <h2 className="text-xl font-medium mb-4 text-gray-500">
-        {dict.postAdForm.step} {step} {dict.postAdForm.of} 5
+        {dict.postAdForm.step} {step} {dict.postAdForm.of} 3
       </h2>
 
       {step === 1 && <Step1 dict={dict.postAdForm} onNext={nextStep} formData={formData} setFormData={setFormData} lang={lang} />}
       {step === 2 && <Step2 dict={dict.postAdForm} onBack={prevStep} onNext={nextStep} formData={formData} setFormData={setFormData} />}
       {step === 3 && <Step3 dict={dict.postAdForm} onBack={prevStep} onNext={nextStep} formData={formData} setFormData={setFormData} />}
-      {/* ... other steps ... */}
 
       <div className="flex justify-between mt-8 pt-6 border-t">
         {step > 1 ? (
@@ -358,7 +358,7 @@ const PostAdForm = ({ dict, lang }: { dict: any, lang: string }) => {
         ) : (
             <div></div> 
         )}
-        {step < 5 ? (
+        {step < 3 ? (
           <button onClick={nextStep} className="px-6 py-2 bg-primary-600 text-white rounded-sm hover:bg-primary-700">
             {dict.postAdForm.next}
           </button>
