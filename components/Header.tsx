@@ -14,9 +14,9 @@ const Header = ({ lang, dict }: { lang: string, dict: any }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="bg-white shadow-sm border-b sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <header className="bg-red-500 sticky top-0 z-50 shadow-md">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex justify-between items-center py-4">
           {/* Лого как у Idealista */}
           <div className="flex items-center">
             <Link href={`/${lang}`} className="flex-shrink-0">
