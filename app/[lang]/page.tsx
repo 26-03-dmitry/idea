@@ -113,7 +113,7 @@ export default async function Page({ params: { lang } }: { params: { lang: strin
       
       {/* Hero секция - упрощенная */}
       <section className="bg-white py-12">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+        <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-4xl font-normal text-gray-900 mb-4">
             Поиск недвижимости в Грузии
           </h1>
@@ -125,14 +125,14 @@ export default async function Page({ params: { lang } }: { params: { lang: strin
 
       {/* Форма поиска */}
       <section className="relative z-10 pb-8 -mt-16">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <SearchForm dict={dict.searchForm} />
         </div>
       </section>
 
       {/* Секция с картой */}
       <section className="pb-8">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
            <h2 className="text-xl font-medium text-gray-900 mb-4">
             Поиск по карте
            </h2>
@@ -144,7 +144,7 @@ export default async function Page({ params: { lang } }: { params: { lang: strin
 
       {/* Результаты поиска */}
       <section className="py-8">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-medium text-gray-900">
               Рекомендуемые объекты
@@ -185,7 +185,7 @@ export default async function Page({ params: { lang } }: { params: { lang: strin
 
       {/* Футер - упрощенный */}
       <footer className="bg-white border-t mt-12">
-        <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-lg font-medium text-gray-900 mb-4">
