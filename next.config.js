@@ -2,12 +2,21 @@ const isProd = process.env.NODE_ENV === 'production';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export', // This line is commented out to allow middleware to run in development
+  output: 'export',
   // Apply assetPrefix only for production builds
   assetPrefix: process.env.NODE_ENV === 'production' ? '/idea/' : undefined,
   images: {
     unoptimized: true,
-    domains: ['images.unsplash.com', 'example.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+      },
+    ],
   },
 };
 
