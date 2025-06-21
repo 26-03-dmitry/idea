@@ -5,6 +5,9 @@ module.exports = {
     './app/[lang]/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'max-w-7xl',
+  ],
   theme: {
     extend: {
       colors: {
