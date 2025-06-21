@@ -104,6 +104,13 @@ const sampleProperties = [
   }
 ]
 
+export async function generateStaticParams() {
+  const locales = ['en', 'ru', 'ka'];
+  return locales.map((locale) => ({
+    lang: locale,
+  }));
+}
+
 export default async function Page({ params: { lang } }: { params: { lang: string } }) {
   const dict = await getDictionary(lang);
 
