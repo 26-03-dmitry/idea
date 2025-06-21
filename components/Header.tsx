@@ -14,16 +14,18 @@ const Header = ({ lang, dict }: { lang: string, dict: any }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="bg-red-500 sticky top-0 z-50 shadow-md">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center py-4">
-          {/* Лого как у Idealista */}
+    <header className="bg-white shadow-sm border-b sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          
+          {/* Левая часть: Лого и основные ссылки */}
           <div className="flex items-center">
-            <Link href={`/${lang}`} className="flex-shrink-0">
-              <h1 className="text-2xl font-normal text-primary-600">
-                idealista<span className="text-accent-600">.ge</span>
-              </h1>
-            </Link>
+            {/* Лого как у Idealista */}
+            <a href={`/${lang}`} className="flex items-center space-x-2">
+              <span className="text-xl font-bold text-gray-900">
+                idealista<span className="text-primary-600">.ge</span>
+              </span>
+            </a>
           </div>
 
           {/* Главная навигация */}

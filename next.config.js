@@ -2,7 +2,8 @@ const isProd = process.env.NODE_ENV === 'production';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // basePath: "/idea", // закомментировано, так как gh-pages-redirect.js решает проблему с путем
+  // output: 'export', // раскомментировал для сборки
   // Apply assetPrefix only for production builds
   assetPrefix: process.env.NODE_ENV === 'production' ? '/idea/' : undefined,
   images: {
