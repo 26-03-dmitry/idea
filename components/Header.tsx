@@ -69,10 +69,10 @@ const Header = ({ lang, dict }: { lang: string, dict: any }) => {
               <Link href={`/${lang}/post-ad/`} className="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors">
                 {dict.placeAd}
               </Link>
-              <button className="flex items-center space-x-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-sm hover:bg-gray-50 transition-colors text-sm">
+              <Link href={`/${lang}/signup`} className="flex items-center space-x-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-sm hover:bg-gray-50 transition-colors text-sm">
                 <User className="h-4 w-4" />
                 <span>{dict.signIn}</span>
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -115,10 +115,10 @@ const Header = ({ lang, dict }: { lang: string, dict: any }) => {
                 <Link href={`/${lang}/post-ad/`} className="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-sm text-sm font-medium transition-colors">
                   {dict.placeAd}
                 </Link>
-                <button className="flex items-center space-x-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-sm hover:bg-gray-50 transition-colors text-sm">
+                <Link href={`/${lang}/signup`} className="flex items-center space-x-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-sm hover:bg-gray-50 transition-colors text-sm">
                   <User className="h-4 w-4" />
                   <span>{dict.signIn}</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
