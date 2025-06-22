@@ -33,6 +33,11 @@ jobs:
       - name: Build 🏗️
         run: npm run build
 
+      - name: Prepare for GitHub Pages 📄
+        run: |
+          touch out/.nojekyll
+          node scripts/gh-pages-redirect.js
+
       - name: Setup Pages ⚙️
         uses: actions/configure-pages@v5
 
