@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -36,7 +36,7 @@ jobs:
       - name: Prepare for GitHub Pages 📄
         run: |
           touch out/.nojekyll
-          node scripts/gh-pages-redirect.js
+          node scripts/generate-404.js
 
       - name: Setup Pages ⚙️
         uses: actions/configure-pages@v5
