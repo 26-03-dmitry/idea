@@ -3,13 +3,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { UploadCloud, X } from 'lucide-react';
+import { type Locale } from '@/i18n.config';
 
 const LocationPickerMap = dynamic(
   () => import('@/components/LocationPickerMap'),
   { ssr: false }
 );
 
-const Step1 = ({ dict, onNext, formData, setFormData, lang }: { dict: any, onNext: () => void, formData: any, setFormData: any, lang: string }) => {
+const Step1 = ({ dictionary, onNext, formData, setFormData, lang }: { dictionary: any, onNext: () => void, formData: any, setFormData: any, lang: Locale }) => {
   
   const [isGeocoding, setIsGeocoding] = useState(false);
   const apiKey = 'fFwC9Atmm5nOTMrzWgR8'; 
@@ -61,48 +62,48 @@ const Step1 = ({ dict, onNext, formData, setFormData, lang }: { dict: any, onNex
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-6 border-b pb-3">{dict.step1_title}</h2>
+      <h2 className="text-xl font-semibold mb-6 border-b pb-3">{dictionary.step1_title}</h2>
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700">{dict.what_to_publish}</label>
+            <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700">{dictionary.what_to_publish}</label>
             <select id="propertyType" name="propertyType" value={formData.propertyType} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-100">
-              <option>{dict.room}</option>
-              <option>{dict.apartment}</option>
-              <option>{dict.house}</option>
-              <option>{dict.garage}</option>
-              <option>{dict.land}</option>
-              <option>{dict.commercial}</option>
+              <option>{dictionary.room}</option>
+              <option>{dictionary.apartment}</option>
+              <option>{dictionary.house}</option>
+              <option>{dictionary.garage}</option>
+              <option>{dictionary.land}</option>
+              <option>{dictionary.commercial}</option>
             </select>
           </div>
           <div>
-            <label htmlFor="dealType" className="block text-sm font-medium text-gray-700">{dict.deal_type}</label>
+            <label htmlFor="dealType" className="block text-sm font-medium text-gray-700">{dictionary.deal_type}</label>
             <select id="dealType" name="dealType" value={formData.dealType} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-100">
-              <option>{dict.sale}</option>
-              <option>{dict.rent}</option>
+              <option>{dictionary.sale}</option>
+              <option>{dictionary.rent}</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label htmlFor="city" className="block text-sm font-medium text-gray-700">{dict.city}</label>
-          <input type="text" name="city" id="city" value={formData.city} onChange={handleInputChange} placeholder={dict.city_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
+          <label htmlFor="city" className="block text-sm font-medium text-gray-700">{dictionary.city}</label>
+          <input type="text" name="city" id="city" value={formData.city} onChange={handleInputChange} placeholder={dictionary.city_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="md:col-span-2">
-                <label htmlFor="street" className="block text-sm font-medium text-gray-700">{dict.street}</label>
-                <input type="text" name="street" id="street" value={formData.street} onChange={handleInputChange} placeholder={dict.street_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
+                <label htmlFor="street" className="block text-sm font-medium text-gray-700">{dictionary.street}</label>
+                <input type="text" name="street" id="street" value={formData.street} onChange={handleInputChange} placeholder={dictionary.street_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
             </div>
             <div>
-                <label htmlFor="houseNumber" className="block text-sm font-medium text-gray-700">{dict.house_number}</label>
-                <input type="text" name="houseNumber" id="houseNumber" value={formData.houseNumber} onChange={handleInputChange} placeholder={dict.house_number_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
+                <label htmlFor="houseNumber" className="block text-sm font-medium text-gray-700">{dictionary.house_number}</label>
+                <input type="text" name="houseNumber" id="houseNumber" value={formData.houseNumber} onChange={handleInputChange} placeholder={dictionary.house_number_placeholder} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
             </div>
         </div>
 
         <div>
-          <h3 className="text-md font-medium text-gray-800">{dict.location_on_map}</h3>
-           <p className="text-sm text-gray-600 mb-2">{dict.location_on_map_hint}</p>
+          <h3 className="text-md font-medium text-gray-800">{dictionary.location_on_map}</h3>
+           <p className="text-sm text-gray-600 mb-2">{dictionary.location_on_map_hint}</p>
           <LocationPickerMap 
             initialPosition={[formData.coordinates.lat, formData.coordinates.lng]}
             onPositionChange={handlePositionChange}
@@ -118,7 +119,7 @@ const Step1 = ({ dict, onNext, formData, setFormData, lang }: { dict: any, onNex
   )
 };
 
-const Step2 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onBack: () => void, onNext: () => void, formData: any, setFormData: any }) => {
+const Step2 = ({ dictionary, onBack, onNext, formData, setFormData }: { dictionary: any, onBack: () => void, onNext: () => void, formData: any, setFormData: any }) => {
     
     const [imagePreviews, setImagePreviews] = useState<string[]>([]);
     const [videoPreview, setVideoPreview] = useState<string | null>(null);
@@ -179,18 +180,18 @@ const Step2 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
 
     return (
         <div>
-            <h2 className="text-xl font-semibold mb-6 border-b pb-3">{dict.step2_title}</h2>
+            <h2 className="text-xl font-semibold mb-6 border-b pb-3">{dictionary.step2_title}</h2>
             <div className="space-y-8">
                 {/* Photo Uploader */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">{dict.photos}</label>
-                    <p className="text-xs text-gray-500 mb-2">{dict.photos_hint}</p>
+                    <label className="block text-sm font-medium text-gray-700">{dictionary.photos}</label>
+                    <p className="text-xs text-gray-500 mb-2">{dictionary.photos_hint}</p>
                     <div className="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                         <div className="space-y-1 text-center">
                             <UploadCloud className="mx-auto h-12 w-12 text-gray-400" />
                             <div className="flex text-sm text-gray-600">
                                 <label htmlFor="image-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500">
-                                    <span>{dict.upload_btn}</span>
+                                    <span>{dictionary.upload_btn}</span>
                                     <input id="image-upload" type="file" className="sr-only" multiple onChange={handleImageFileChange} ref={imageInputRef} accept="image/*" />
                                 </label>
                             </div>
@@ -212,8 +213,8 @@ const Step2 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
 
                 {/* Video Uploader */}
                 <div>
-                     <label className="block text-sm font-medium text-gray-700">{dict.video}</label>
-                    <p className="text-xs text-gray-500 mb-2">{dict.video_hint}</p>
+                     <label className="block text-sm font-medium text-gray-700">{dictionary.video}</label>
+                    <p className="text-xs text-gray-500 mb-2">{dictionary.video_hint}</p>
                     {videoPreview ? (
                          <div className="relative group">
                             <video src={videoPreview} controls className="w-full rounded-md" />
@@ -227,7 +228,7 @@ const Step2 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
                                 <UploadCloud className="mx-auto h-12 w-12 text-gray-400" />
                                 <div className="flex text-sm text-gray-600">
                                     <label htmlFor="video-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500">
-                                        <span>{dict.upload_video_btn}</span>
+                                        <span>{dictionary.upload_video_btn}</span>
                                         <input id="video-upload" type="file" className="sr-only" onChange={handleVideoFileChange} ref={videoInputRef} accept="video/mp4,video/mov,video/quicktime" />
                                     </label>
                                 </div>
@@ -241,7 +242,7 @@ const Step2 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
     );
 };
 
-const Step3 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onBack: () => void, onNext: () => void, formData: any, setFormData: any }) => {
+const Step3 = ({ dictionary, onBack, onNext, formData, setFormData }: { dictionary: any, onBack: () => void, onNext: () => void, formData: any, setFormData: any }) => {
     
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -261,71 +262,71 @@ const Step3 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
 
     return (
         <div>
-            <h2 className="text-xl font-semibold mb-6 border-b pb-3">{dict.step3_title}</h2>
+            <h2 className="text-xl font-semibold mb-6 border-b pb-3">{dictionary.step3_title}</h2>
             <div className="space-y-6">
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
-                        <label htmlFor="totalArea" className="block text-sm font-medium text-gray-700">{dict.total_area}</label>
+                        <label htmlFor="totalArea" className="block text-sm font-medium text-gray-700">{dictionary.total_area}</label>
                         <input type="number" name="totalArea" id="totalArea" value={formData.totalArea} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
                     </div>
                     <div>
-                        <label htmlFor="livingArea" className="block text-sm font-medium text-gray-700">{dict.living_area}</label>
+                        <label htmlFor="livingArea" className="block text-sm font-medium text-gray-700">{dictionary.living_area}</label>
                         <input type="number" name="livingArea" id="livingArea" value={formData.livingArea} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
                     </div>
                     <div>
-                        <label htmlFor="kitchenArea" className="block text-sm font-medium text-gray-700">{dict.kitchen_area}</label>
+                        <label htmlFor="kitchenArea" className="block text-sm font-medium text-gray-700">{dictionary.kitchen_area}</label>
                         <input type="number" name="kitchenArea" id="kitchenArea" value={formData.kitchenArea} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                      <div>
-                        <label htmlFor="rooms" className="block text-sm font-medium text-gray-700">{dict.rooms}</label>
+                        <label htmlFor="rooms" className="block text-sm font-medium text-gray-700">{dictionary.rooms}</label>
                         <input type="number" name="rooms" id="rooms" value={formData.rooms} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
                     </div>
                     <div>
-                        <label htmlFor="floor" className="block text-sm font-medium text-gray-700">{dict.floor}</label>
+                        <label htmlFor="floor" className="block text-sm font-medium text-gray-700">{dictionary.floor}</label>
                         <input type="number" name="floor" id="floor" value={formData.floor} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
                     </div>
                     <div>
-                        <label htmlFor="totalFloors" className="block text-sm font-medium text-gray-700">{dict.total_floors}</label>
+                        <label htmlFor="totalFloors" className="block text-sm font-medium text-gray-700">{dictionary.total_floors}</label>
                         <input type="number" name="totalFloors" id="totalFloors" value={formData.totalFloors} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
                     </div>
                 </div>
                 
                  <div>
-                    <label htmlFor="condition" className="block text-sm font-medium text-gray-700">{dict.condition}</label>
+                    <label htmlFor="condition" className="block text-sm font-medium text-gray-700">{dictionary.condition}</label>
                     <select id="condition" name="condition" value={formData.condition} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-100">
-                        <option>{dict.condition_new}</option>
-                        <option>{dict.condition_good}</option>
-                        <option>{dict.condition_medium}</option>
-                        <option>{dict.condition_needs_repair}</option>
-                        <option>{dict.condition_black_frame}</option>
-                        <option>{dict.condition_white_frame}</option>
+                        <option>{dictionary.condition_new}</option>
+                        <option>{dictionary.condition_good}</option>
+                        <option>{dictionary.condition_medium}</option>
+                        <option>{dictionary.condition_needs_repair}</option>
+                        <option>{dictionary.condition_black_frame}</option>
+                        <option>{dictionary.condition_white_frame}</option>
                     </select>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 pt-6 border-t mt-6">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">{dict.windows_exit}</label>
+                        <label className="block text-sm font-medium text-gray-700">{dictionary.windows_exit}</label>
                         <div className="mt-2 grid grid-cols-2 gap-4">
                             {['north', 'south', 'east', 'west'].map((direction) => (
                                 <label key={direction} className="flex items-center space-x-2">
                                     <input type="checkbox" name={direction} checked={formData.windows[direction]} onChange={handleCheckboxChange} className="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded" />
-                                    <span>{dict[direction]}</span>
+                                    <span>{dictionary[direction]}</span>
                                 </label>
                             ))}
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="maintenance_cost" className="block text-sm font-medium text-gray-700">{dict.maintenance_cost}</label>
-                        <p className="text-xs text-gray-500 mb-2">{dict.maintenance_cost_hint}</p>
+                        <label htmlFor="maintenance_cost" className="block text-sm font-medium text-gray-700">{dictionary.maintenance_cost}</label>
+                        <p className="text-xs text-gray-500 mb-2">{dictionary.maintenance_cost_hint}</p>
                         <div className="mt-1 flex rounded-md shadow-sm">
                             <input type="number" name="maintenanceCostAmount" id="maintenance_cost" value={formData.maintenanceCostAmount} onChange={handleInputChange} className="focus:ring-primary-500 focus:border-primary-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border border-gray-300 bg-gray-100 px-3" />
                             <select name="maintenanceCostCurrency" value={formData.maintenanceCostCurrency} onChange={handleInputChange} className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-100 text-gray-700 text-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                <option value="gel">{dict.currency_gel}</option>
-                                <option value="usd">{dict.currency_usd}</option>
+                                <option value="gel">{dictionary.currency_gel}</option>
+                                <option value="usd">{dictionary.currency_usd}</option>
                             </select>
                         </div>
                     </div>
@@ -334,19 +335,19 @@ const Step3 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                     {['elevator', 'gas', 'security', 'cctv'].map((feature) => (
                         <div key={feature}>
-                            <label htmlFor={feature} className="block text-sm font-medium text-gray-700">{dict[feature]}</label>
+                            <label htmlFor={feature} className="block text-sm font-medium text-gray-700">{dictionary[feature]}</label>
                             <select id={feature} name={feature} value={formData[feature]} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-100">
-                                <option value="yes">{dict.yes}</option>
-                                <option value="no">{dict.no}</option>
+                                <option value="yes">{dictionary.yes}</option>
+                                <option value="no">{dictionary.no}</option>
                             </select>
                         </div>
                     ))}
                 </div>
 
                 <div className="pt-6 border-t mt-6">
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">{dict.description}</label>
-                    <p className="text-xs text-gray-500 mb-2">{dict.description_hint_detail}</p>
-                    <textarea id="description" name="description" rows={5} value={formData.description} onChange={handleInputChange} placeholder={dict.description_placeholder} className="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 bg-gray-100"></textarea>
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">{dictionary.description}</label>
+                    <p className="text-xs text-gray-500 mb-2">{dictionary.description_hint_detail}</p>
+                    <textarea id="description" name="description" rows={5} value={formData.description} onChange={handleInputChange} placeholder={dictionary.description_placeholder} className="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 bg-gray-100"></textarea>
                 </div>
 
             </div>
@@ -354,11 +355,11 @@ const Step3 = ({ dict, onBack, onNext, formData, setFormData }: { dict: any, onB
     );
 }
 
-const PostAdForm = ({ dict, lang }: { dict: any, lang: string }) => {
+const PostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    propertyType: dict.postAdForm.apartment,
-    dealType: dict.postAdForm.sale,
+    propertyType: dictionary.postAdForm.apartment,
+    dealType: dictionary.postAdForm.sale,
     city: '',
     street: '',
     houseNumber: '',
@@ -372,7 +373,7 @@ const PostAdForm = ({ dict, lang }: { dict: any, lang: string }) => {
     rooms: '',
     floor: '',
     totalFloors: '',
-    condition: dict.postAdForm.condition_good,
+    condition: dictionary.postAdForm.condition_good,
     windows: {
         north: false,
         south: false,
@@ -401,42 +402,42 @@ const PostAdForm = ({ dict, lang }: { dict: any, lang: string }) => {
   useEffect(() => {
     setFormData(prev => ({
         ...prev,
-        propertyType: dict.postAdForm.apartment,
-        dealType: dict.postAdForm.sale,
-        condition: dict.postAdForm.condition_good,
+        propertyType: dictionary.postAdForm.apartment,
+        dealType: dictionary.postAdForm.sale,
+        condition: dictionary.postAdForm.condition_good,
         elevator: 'no',
         gas: 'yes',
         security: 'no',
         cctv: 'no',
         maintenanceCostCurrency: 'gel',
     }))
-  }, [dict])
+  }, [dictionary])
 
   return (
     <div className="bg-white p-6 sm:p-8 rounded-sm border">
       <h2 className="text-xl font-medium mb-4 text-gray-500">
-        {dict.postAdForm.step} {step} {dict.postAdForm.of} 3
+        {dictionary.postAdForm.step} {step} {dictionary.postAdForm.of} 3
       </h2>
 
-      {step === 1 && <Step1 dict={dict.postAdForm} onNext={nextStep} formData={formData} setFormData={setFormData} lang={lang} />}
-      {step === 2 && <Step2 dict={dict.postAdForm} onBack={prevStep} onNext={nextStep} formData={formData} setFormData={setFormData} />}
-      {step === 3 && <Step3 dict={dict.postAdForm} onBack={prevStep} onNext={nextStep} formData={formData} setFormData={setFormData} />}
+      {step === 1 && <Step1 dictionary={dictionary.postAd} onNext={nextStep} formData={formData} setFormData={setFormData} lang={lang} />}
+      {step === 2 && <Step2 dictionary={dictionary.postAd} onBack={prevStep} onNext={nextStep} formData={formData} setFormData={setFormData} />}
+      {step === 3 && <Step3 dictionary={dictionary.postAd} onBack={prevStep} onNext={nextStep} formData={formData} setFormData={setFormData} />}
 
       <div className="flex justify-between mt-8 pt-6 border-t">
         {step > 1 ? (
           <button onClick={prevStep} className="px-6 py-2 border rounded-sm text-gray-700 hover:bg-gray-50">
-            {dict.postAdForm.back}
+            {dictionary.postAdForm.back}
           </button>
         ) : (
             <div></div> 
         )}
         {step < 3 ? (
           <button onClick={nextStep} className="px-6 py-2 bg-primary-600 text-white rounded-sm hover:bg-primary-700">
-            {dict.postAdForm.next}
+            {dictionary.postAdForm.next}
           </button>
         ) : (
           <button onClick={handleSubmit} className="px-6 py-2 bg-accent-500 text-white rounded-sm hover:bg-accent-600">
-            {dict.postAdForm.publish}
+            {dictionary.postAdForm.publish}
           </button>
         )}
       </div>
