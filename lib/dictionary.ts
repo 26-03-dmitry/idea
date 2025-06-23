@@ -1,7 +1,7 @@
 const dictionaries: { [key: string]: () => Promise<any> } = {
-  en: () => import('@/dictionaries/en.json').then((module) => module.default),
-  ru: () => import('@/dictionaries/ru.json').then((module) => module.default),
-  ka: () => import('@/dictionaries/ka.json').then((module) => module.default),
+  en: () => import('@/dictionaries/en.json'),
+  ru: () => import('@/dictionaries/ru.json'),
+  ka: () => import('@/dictionaries/ka.json'),
 }
 
 export const getDictionary = async (locale: string) => {
