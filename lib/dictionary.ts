@@ -6,5 +6,8 @@ const dictionaries: { [key: string]: () => Promise<any> } = {
 
 export const getDictionary = async (locale: string) => {
     const loader = dictionaries[locale] || dictionaries.ka;
-    return loader();
+    const dictionaryModule = await loader();
+    // We need to ensure we're passing a plain object, not a module object.
+    // The JSON.parse(JSON.stringify(...)) trick is a reliable way to do this.
+    return JSON.parse(JSON.stringify(dictionaryModule));
 } 
