@@ -314,7 +314,7 @@ const Step3 = ({ dictionary, onBack, onNext, formData, setFormData }: { dictiona
     );
 }
 
-const PostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) => {
+const NewPostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     propertyType: '',
@@ -421,4 +421,4 @@ const PostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) => 
   );
 };
 
-export default PostAdForm; 
+export default NewPostAdForm; 
