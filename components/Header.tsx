@@ -20,10 +20,10 @@ const Header = ({ lang, dict }: { lang: string, dict: any }) => {
           
           {/* Левая часть: Лого и основные ссылки */}
           <div className="flex items-center">
-            {/* Лого как у Idealista */}
+            {/* Лого как у Idea */}
             <Link href={`/${lang}/`} className="flex items-center space-x-2">
               <span className="text-xl font-bold text-gray-900">
-                idealista<span className="text-primary-600">.ge</span>
+                dedamitsa<span className="text-primary-600">.ge</span>
               </span>
             </Link>
           </div>
