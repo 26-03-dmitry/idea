@@ -1,3 +1,7 @@
+'use client'
+import { useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../globals.css'
@@ -22,6 +26,22 @@ export default function RootLayout({
   children: React.ReactNode
   params: { lang: string }
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    if (redirect && redirect !== location.href) {
+      // We need to remove the basePath from the start of the pathname
+      // as Next.js router works with paths without the basePath.
+      const targetPath = new URL(redirect).pathname.replace(/^\/idea/, '');
+      if (targetPath && targetPath !== pathname) {
+        router.replace(targetPath);
+      }
+    }
+  }, [pathname, router]);
+
   return (
     <html lang={params.lang}>
       <head>
