@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: 'idealista.ge - Недвижимость в Грузии',
+  title: 'dedamitsa.ge - Недвижимость в Грузии',
   description: 'Найдите идеальную недвижимость в Грузии. Квартиры, дома, коммерческая недвижимость в Тбилиси, Батуми и других городах.',
   keywords: 'недвижимость Грузия, квартиры Тбилиси, дома Батуми, купить квартиру Грузия',
 }
