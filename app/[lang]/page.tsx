@@ -1,15 +1,11 @@
-import { getDictionary } from '@/lib/dictionary'
-import HomePageClient from '@/components/HomePageClient'
+    import { getDictionary } from '@/lib/dictionary';
+    import PostAdPageClient from '@/components/PostAdPageClient';
 
-export async function generateStaticParams() {
-  const locales = ['en', 'ru', 'ka'];
-  return locales.map((locale) => ({
-    lang: locale,
-  }));
-}
+    export async function generateStaticParams() {
+      return [{ lang: 'en' }, { lang: 'ru' }, { lang: 'ka' }];
+    }
 
-export default async function Page({ params: { lang } }: { params: { lang: string } }) {
-  const dict = await getDictionary(lang);
-
-  return <HomePageClient dict={dict} lang={lang} />
-} 
+    export default async function PostAdPage({ params: { lang } }: { params: { lang:string } }) {
+      const dict = await getDictionary(lang);
+      return <PostAdPageClient lang={lang} dict={dict} />;
+    }
