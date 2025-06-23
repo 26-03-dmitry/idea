@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { UploadCloud, X } from 'lucide-react';
+import { UploadCloud, X, CheckCircle, Loader2 } from 'lucide-react';
 import { type Locale } from '@/i18n.config';
+import { createProperty } from '@/lib/properties';
 
 const LocationPickerMap = dynamic(
   () => import('@/components/LocationPickerMap'),
@@ -147,13 +148,56 @@ const Step2 = ({ dictionary, onBack, onNext, formData, setFormData }: { dictiona
     const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const files = Array.from(e.target.files);
-            setFormData((prev: any) => ({ ...prev, images: [...(prev.images || []), ...files] }));
+            
+            // Проверяем каждый файл
+            const validFiles: File[] = [];
+            const errors: string[] = [];
+            
+            files.forEach((file, index) => {
+                // Проверяем размер (максимум 10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    errors.push(`Изображение "${file.name}" слишком большое (максимум 10MB)`);
+                    return;
+                }
+                
+                // Проверяем тип файла
+                if (!file.type.startsWith('image/')) {
+                    errors.push(`Файл "${file.name}" не является изображением`);
+                    return;
+                }
+                
+                validFiles.push(file);
+            });
+            
+            // Показываем ошибки если есть
+            if (errors.length > 0) {
+                alert(errors.join('\n'));
+            }
+            
+            // Добавляем только валидные файлы
+            if (validFiles.length > 0) {
+                setFormData((prev: any) => ({ ...prev, images: [...(prev.images || []), ...validFiles] }));
+            }
         }
     };
     
     const handleVideoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            setFormData((prev: any) => ({ ...prev, video: e.target.files![0] }));
+            const file = e.target.files[0];
+            
+            // Проверяем размер (максимум 100MB)
+            if (file.size > 100 * 1024 * 1024) {
+                alert(`Видео "${file.name}" слишком большое (максимум 100MB)`);
+                return;
+            }
+            
+            // Проверяем тип файла
+            if (!file.type.startsWith('video/')) {
+                alert(`Файл "${file.name}" не является видео`);
+                return;
+            }
+            
+            setFormData((prev: any) => ({ ...prev, video: file }));
         }
     };
 
@@ -173,7 +217,7 @@ const Step2 = ({ dictionary, onBack, onNext, formData, setFormData }: { dictiona
             <div className="space-y-8">
                 <div>
                     <label className="block text-sm font-medium text-gray-700">{dictionary.photos}</label>
-                    <p className="text-xs text-gray-500 mb-2">{dictionary.photos_hint}</p>
+                    <p className="text-xs text-gray-500 mb-2">{dictionary.photos_hint} (максимум 10MB на файл)</p>
                     <div className="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                         <div className="space-y-1 text-center">
                             <UploadCloud className="mx-auto h-12 w-12 text-gray-400" />
@@ -199,9 +243,9 @@ const Step2 = ({ dictionary, onBack, onNext, formData, setFormData }: { dictiona
                     )}
                 </div>
 
-                <div>
-                     <label className="block text-sm font-medium text-gray-700">{dictionary.video}</label>
-                    <p className="text-xs text-gray-500 mb-2">{dictionary.video_hint}</p>
+                                <div>
+                    <label className="block text-sm font-medium text-gray-700">{dictionary.video}</label>
+                    <p className="text-xs text-gray-500 mb-2">{dictionary.video_hint} (максимум 100MB)</p>
                     {videoPreview ? (
                          <div className="relative group">
                             <video src={videoPreview} controls className="w-full rounded-md" />
@@ -246,68 +290,151 @@ const Step3 = ({ dictionary, onBack, onNext, formData, setFormData }: { dictiona
             <h2 className="text-xl font-semibold mb-6 border-b pb-3">{dictionary.step3_title}</h2>
 
             <div className="space-y-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                         <label htmlFor="area" className="block text-sm font-medium text-gray-700">{dictionary.total_area}</label>
                         <input type="number" name="area" id="area" value={formData.area} onChange={handleInputChange} placeholder="120" className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
                     </div>
+                    <div>
+                        <label htmlFor="living_area" className="block text-sm font-medium text-gray-700">{dictionary.living_area}</label>
+                        <input type="number" name="living_area" id="living_area" value={formData.living_area} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
+                    </div>
+                    <div>
+                        <label htmlFor="kitchen_area" className="block text-sm font-medium text-gray-700">{dictionary.kitchen_area}</label>
+                        <input type="number" name="kitchen_area" id="kitchen_area" value={formData.kitchen_area} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div>
                         <label htmlFor="bedrooms" className="block text-sm font-medium text-gray-700">{dictionary.rooms}</label>
                         <input type="number" name="bedrooms" id="bedrooms" value={formData.bedrooms} onChange={handleInputChange} placeholder="3" className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
                     </div>
                     <div>
                         <label htmlFor="bathrooms" className="block text-sm font-medium text-gray-700">{dictionary.bathrooms}</label>
-                        <input type="number" name="bathrooms" id="bathrooms" value={formData.bathrooms} onChange={handleInputChange} placeholder="2" className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
+                        <input type="number" name="bathrooms" id="bathrooms" value={formData.bathrooms} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
                     </div>
                     <div>
-                         <label htmlFor="windowDirection" className="block text-sm font-medium text-gray-700">{dictionary.windows_exit}</label>
-                        <select id="windowDirection" name="windowDirection" value={formData.windowDirection} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-100">
-                            <option>{dictionary.east}</option>
-                            <option>{dictionary.west}</option>
-                            <option>{dictionary.south}</option>
-                            <option>{dictionary.north}</option>
+                        <label htmlFor="floor" className="block text-sm font-medium text-gray-700">{dictionary.floor}</label>
+                        <input type="number" name="floor" id="floor" value={formData.floor} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
+                    </div>
+                    <div>
+                        <label htmlFor="total_floors" className="block text-sm font-medium text-gray-700">{dictionary.total_floors}</label>
+                        <input type="number" name="total_floors" id="total_floors" value={formData.total_floors} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
+                    </div>
+                </div>
+
+                <div>
+                    <label htmlFor="condition" className="block text-sm font-medium text-gray-700 mb-2">{dictionary.condition}</label>
+                    <select id="condition" name="condition" value={formData.condition} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-100">
+                        <option value={dictionary.condition_new}>{dictionary.condition_new}</option>
+                        <option value={dictionary.condition_good}>{dictionary.condition_good}</option>
+                        <option value={dictionary.condition_medium}>{dictionary.condition_medium}</option>
+                        <option value={dictionary.condition_needs_repair}>{dictionary.condition_needs_repair}</option>
+                        <option value={dictionary.condition_black_frame}>{dictionary.condition_black_frame}</option>
+                        <option value={dictionary.condition_white_frame}>{dictionary.condition_white_frame}</option>
+                    </select>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div>
+                        <h3 className="text-sm font-medium text-gray-700 mb-2">{dictionary.windows_exit}</h3>
+                        <div className="space-y-2">
+                            <div className="flex items-center">
+                                <input id="north" name="windowDirection" type="checkbox" value="north" checked={formData.windowDirections?.includes('north')} onChange={(e) => {
+                                    const directions = formData.windowDirections || [];
+                                    if (e.target.checked) {
+                                        setFormData((prev: any) => ({ ...prev, windowDirections: [...directions, 'north'] }));
+                                    } else {
+                                        setFormData((prev: any) => ({ ...prev, windowDirections: directions.filter((d: string) => d !== 'north') }));
+                                    }
+                                }} className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded" />
+                                <label htmlFor="north" className="ml-2 block text-sm text-gray-900">{dictionary.north}</label>
+                            </div>
+                            <div className="flex items-center">
+                                <input id="south" name="windowDirection" type="checkbox" value="south" checked={formData.windowDirections?.includes('south')} onChange={(e) => {
+                                    const directions = formData.windowDirections || [];
+                                    if (e.target.checked) {
+                                        setFormData((prev: any) => ({ ...prev, windowDirections: [...directions, 'south'] }));
+                                    } else {
+                                        setFormData((prev: any) => ({ ...prev, windowDirections: directions.filter((d: string) => d !== 'south') }));
+                                    }
+                                }} className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded" />
+                                <label htmlFor="south" className="ml-2 block text-sm text-gray-900">{dictionary.south}</label>
+                            </div>
+                            <div className="flex items-center">
+                                <input id="east" name="windowDirection" type="checkbox" value="east" checked={formData.windowDirections?.includes('east')} onChange={(e) => {
+                                    const directions = formData.windowDirections || [];
+                                    if (e.target.checked) {
+                                        setFormData((prev: any) => ({ ...prev, windowDirections: [...directions, 'east'] }));
+                                    } else {
+                                        setFormData((prev: any) => ({ ...prev, windowDirections: directions.filter((d: string) => d !== 'east') }));
+                                    }
+                                }} className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded" />
+                                <label htmlFor="east" className="ml-2 block text-sm text-gray-900">{dictionary.east}</label>
+                            </div>
+                            <div className="flex items-center">
+                                <input id="west" name="windowDirection" type="checkbox" value="west" checked={formData.windowDirections?.includes('west')} onChange={(e) => {
+                                    const directions = formData.windowDirections || [];
+                                    if (e.target.checked) {
+                                        setFormData((prev: any) => ({ ...prev, windowDirections: [...directions, 'west'] }));
+                                    } else {
+                                        setFormData((prev: any) => ({ ...prev, windowDirections: directions.filter((d: string) => d !== 'west') }));
+                                    }
+                                }} className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded" />
+                                <label htmlFor="west" className="ml-2 block text-sm text-gray-900">{dictionary.west}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label htmlFor="maintenance_cost" className="block text-sm font-medium text-gray-700">{dictionary.maintenance_cost}</label>
+                        <p className="text-xs text-gray-500 mb-2">{dictionary.maintenance_cost_hint}</p>
+                        <div className="flex">
+                            <input type="number" name="maintenance_cost" id="maintenance_cost" value={formData.maintenance_cost} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-l-md bg-gray-100" />
+                            <select name="currency" value={formData.currency} onChange={handleInputChange} className="mt-1 block pl-3 pr-8 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-r-md bg-gray-100">
+                                <option value="gel">₾</option>
+                                <option value="usd">$</option>
+                                <option value="eur">€</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div>
+                        <label htmlFor="elevator" className="block text-sm font-medium text-gray-700">{dictionary.elevator}</label>
+                        <select id="elevator" name="elevator" value={formData.elevator} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-100">
+                            <option value="no">{dictionary.no}</option>
+                            <option value="yes">{dictionary.yes}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="gas" className="block text-sm font-medium text-gray-700">{dictionary.gas}</label>
+                        <select id="gas" name="gas" value={formData.gas} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-100">
+                            <option value="no">{dictionary.no}</option>
+                            <option value="yes">{dictionary.yes}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="security" className="block text-sm font-medium text-gray-700">{dictionary.security}</label>
+                        <select id="security" name="security" value={formData.security} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-100">
+                            <option value="no">{dictionary.no}</option>
+                            <option value="yes">{dictionary.yes}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="cctv" className="block text-sm font-medium text-gray-700">{dictionary.cctv}</label>
+                        <select id="cctv" name="cctv" value={formData.cctv} onChange={handleInputChange} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md bg-gray-100">
+                            <option value="no">{dictionary.no}</option>
+                            <option value="yes">{dictionary.yes}</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
-                    <h3 className="text-md font-medium text-gray-800">{dictionary.condition}</h3>
-                    <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {['condition_new', 'condition_good', 'condition_medium', 'condition_needs_repair', 'condition_black_frame', 'condition_white_frame'].map((feature) => (
-                             <div key={feature} className="flex items-center">
-                                <input id={feature} name="condition" type="radio" value={dictionary[feature]} checked={formData.condition === dictionary[feature]} onChange={handleInputChange} className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300" />
-                                <label htmlFor={feature} className="ml-2 block text-sm text-gray-900">{dictionary[feature]}</label>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                <div>
-                    <h3 className="text-md font-medium text-gray-800">Удобства</h3>
-                    <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {['has_lift', 'has_gas', 'has_internet', 'is_furnished'].map((feature) => (
-                             <div key={feature} className="flex items-center">
-                                <input id={feature} name={feature} type="checkbox" checked={formData[feature]} onChange={handleCheckboxChange} className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded" />
-                                <label htmlFor={feature} className="ml-2 block text-sm text-gray-900">{dictionary[feature]}</label>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                <div>
                     <label htmlFor="description" className="block text-sm font-medium text-gray-700">{dictionary.description}</label>
-                     <textarea id="description" name="description" rows={4} value={formData.description} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" placeholder={dictionary.description_placeholder}></textarea>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label htmlFor="price" className="block text-sm font-medium text-gray-700">{dictionary.maintenance_cost}</label>
-                        <input type="number" name="price" id="price" value={formData.price} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
-                    </div>
-                     <div>
-                        <label htmlFor="maintenance_cost" className="block text-sm font-medium text-gray-700">{dictionary.maintenance_cost_hint}</label>
-                        <input type="number" name="maintenance_cost" id="maintenance_cost" value={formData.maintenance_cost} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" />
-                    </div>
+                    <p className="text-xs text-gray-500 mb-2">{dictionary.description_hint_detail}</p>
+                    <textarea id="description" name="description" rows={4} value={formData.description} onChange={handleInputChange} className="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md bg-gray-100" placeholder={dictionary.description_placeholder}></textarea>
                 </div>
             </div>
         </div>
@@ -316,6 +443,9 @@ const Step3 = ({ dictionary, onBack, onNext, formData, setFormData }: { dictiona
 
 const NewPostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) => {
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     propertyType: '',
     dealType: '',
@@ -326,17 +456,22 @@ const NewPostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) 
     images: [] as File[],
     video: null as File | null,
     area: '',
+    living_area: '',
+    kitchen_area: '',
     bedrooms: '',
     bathrooms: '',
-    windowDirection: '',
+    floor: '',
+    total_floors: '',
+    windowDirections: [] as string[],
     condition: '',
-    has_lift: false,
-    has_gas: false,
-    has_internet: false,
-    is_furnished: false,
+    elevator: 'no',
+    gas: 'no',
+    security: 'no',
+    cctv: 'no',
     description: '',
     price: '',
-    maintenance_cost: ''
+    maintenance_cost: '',
+    currency: 'gel'
   });
 
   useEffect(() => {
@@ -345,7 +480,6 @@ const NewPostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) 
         ...prev,
         propertyType: dictionary.apartment,
         dealType: dictionary.sale,
-        windowDirection: dictionary.east,
         condition: dictionary.condition_good,
       }))
     }
@@ -354,9 +488,89 @@ const NewPostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) 
   const nextStep = () => setStep(s => s + 1);
   const prevStep = () => setStep(s => s - 1);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Submitted:', formData);
+    setIsSubmitting(true);
+    setError(null);
+    
+    try {
+      console.log('=== НАЧАЛО ОТПРАВКИ ФОРМЫ ===');
+      console.log('Form data before submission:', formData);
+      
+      // Проверяем обязательные поля перед отправкой
+      console.log('Проверяем обязательные поля...');
+      console.log('formData.propertyType:', formData.propertyType);
+      console.log('formData.city:', formData.city);
+      console.log('formData.area:', formData.area, 'type:', typeof formData.area);
+      console.log('formData.description:', formData.description);
+      
+      if (!formData.propertyType) {
+        throw new Error('Не выбран тип недвижимости');
+      }
+      if (!formData.city) {
+        throw new Error('Не указан город');
+      }
+      if (!formData.area || formData.area.trim() === '') {
+        throw new Error('Не указана площадь');
+      }
+      if (!formData.description || formData.description.trim() === '') {
+        throw new Error('Не заполнено описание');
+      }
+      
+      console.log('Все обязательные поля заполнены, вызываем createProperty...');
+      const propertyId = await createProperty(formData);
+      console.log('Property created with ID:', propertyId);
+      console.log('=== ОБЪЯВЛЕНИЕ УСПЕШНО СОЗДАНО ===');
+      setIsSuccess(true);
+      
+      // Через 3 секунды перенаправляем на главную страницу
+      setTimeout(() => {
+        window.location.href = `/${lang}/`;
+      }, 3000);
+      
+    } catch (error: any) {
+      console.error('=== ОШИБКА ПРИ СОЗДАНИИ ОБЪЯВЛЕНИЯ ===');
+      console.error('Error details:', error);
+      console.error('Error message:', error?.message);
+      console.error('Error stack:', error?.stack);
+      
+      // Показываем более конкретное сообщение об ошибке
+      let errorMessage = 'Произошла ошибка при создании объявления. Попробуйте еще раз.';
+      
+      if (error.message) {
+        if (error.message.includes('изображений')) {
+          errorMessage = `Ошибка загрузки изображений: ${error.message}`;
+        } else if (error.message.includes('видео')) {
+          errorMessage = `Ошибка загрузки видео: ${error.message}`;
+        } else if (error.message.includes('слишком большое')) {
+          errorMessage = error.message;
+        } else if (error.message.includes('не является')) {
+          errorMessage = error.message;
+        } else if (error.message.includes('обязательные поля')) {
+          errorMessage = error.message;
+        } else if (error.message.includes('Firebase')) {
+          errorMessage = 'Ошибка подключения к серверу. Проверьте интернет-соединение.';
+        } else if (error.message.includes('Permission denied')) {
+          errorMessage = 'Ошибка доступа к базе данных. Проверьте настройки Firebase.';
+        } else if (error.message.includes('network')) {
+          errorMessage = 'Ошибка сети. Проверьте интернет-соединение.';
+        } else {
+          errorMessage = `Ошибка: ${error.message}`;
+        }
+      }
+      
+      console.error('Показываем пользователю ошибку:', errorMessage);
+      setError(errorMessage);
+    } finally {
+      console.log('=== ЗАВЕРШЕНИЕ ОБРАБОТКИ ФОРМЫ ===');
+      setIsSubmitting(false);
+    }
+  };
+
+  // Функция-заглушка для Step3, так как там не нужен onNext
+  const dummyNext = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Ничего не делаем, отправка формы обрабатывается через onSubmit формы
   };
 
   const renderStep = () => {
@@ -366,13 +580,31 @@ const NewPostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) 
       case 2:
         return <Step2 dictionary={dictionary} onBack={prevStep} onNext={nextStep} formData={formData} setFormData={setFormData} />;
       case 3:
-        return <Step3 dictionary={dictionary} onBack={prevStep} onNext={handleSubmit} formData={formData} setFormData={setFormData} />;
+        return <Step3 dictionary={dictionary} onBack={prevStep} onNext={dummyNext} formData={formData} setFormData={setFormData} />;
       default:
         return <Step1 dictionary={dictionary} onNext={nextStep} formData={formData} setFormData={setFormData} lang={lang} />;
     }
   };
 
   const progress = (step / 3) * 100;
+
+  // Показываем страницу успеха
+  if (isSuccess) {
+    return (
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl mx-auto text-center">
+        <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          {dictionary.success_title || 'Объявление успешно размещено!'}
+        </h2>
+        <p className="text-gray-600 mb-4">
+          {dictionary.success_message || 'Ваше объявление проходит модерацию и скоро появится на сайте.'}
+        </p>
+        <p className="text-sm text-gray-500">
+          {dictionary.redirect_message || 'Через несколько секунд вы будете перенаправлены на главную страницу...'}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl mx-auto">
@@ -385,10 +617,16 @@ const NewPostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) 
           </div>
       </div>
 
+      {error && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+          <p className="text-red-800 text-sm">{error}</p>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         {renderStep()}
         <div className="mt-8 pt-6 border-t flex justify-between">
-          {step > 1 && (
+          {step > 1 && !isSubmitting && (
             <button
               type="button"
               onClick={prevStep}
@@ -402,16 +640,19 @@ const NewPostAdForm = ({ dictionary, lang }: { dictionary: any, lang: Locale }) 
             <button
               type="button"
               onClick={nextStep}
-              className="py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+              disabled={isSubmitting}
+              className="py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
             >
               {dictionary.next_btn}
             </button>
           ) : (
             <button
               type="submit"
-              className="py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              disabled={isSubmitting}
+              className="py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 flex items-center"
             >
-              {dictionary.publish_btn}
+              {isSubmitting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+              {isSubmitting ? (dictionary.publishing || 'Публикуем...') : dictionary.publish_btn}
             </button>
           )}
         </div>

@@ -10,7 +10,7 @@ const MapSearch = dynamic(() => import('@/components/MapSearch'), {
   ssr: false 
 });
 
-// Мокданные для недвижимости в стиле Idealista
+// Мокданные для недвижимости
 const sampleProperties = [
   {
     id: '1',
@@ -112,10 +112,10 @@ export default function HomePageClient({ dict, lang }: { dict: any, lang: string
       <section className="bg-white py-12">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-4xl font-normal text-gray-900 mb-4">
-            Поиск недвижимости в Грузии
+            {dict.homePage.heroTitle}
           </h1>
           <p className="text-lg text-gray-600 mb-8">
-            Найдите квартиру или дом мечты среди тысяч предложений
+            {dict.homePage.heroSubtitle}
           </p>
         </div>
       </section>
@@ -131,7 +131,7 @@ export default function HomePageClient({ dict, lang }: { dict: any, lang: string
       <section className="pb-8">
         <div className="max-w-7xl mx-auto px-4">
            <h2 className="text-xl font-medium text-gray-900 mb-4">
-            Поиск по карте
+            {dict.homePage.mapSearchTitle}
            </h2>
           <div className="border rounded-sm overflow-hidden">
             <MapSearch lang={lang} />
@@ -144,10 +144,10 @@ export default function HomePageClient({ dict, lang }: { dict: any, lang: string
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-medium text-gray-900">
-              Рекомендуемые объекты
+              {dict.homePage.recommendedTitle}
             </h2>
             <div className="text-sm text-gray-600">
-              Найдено {sampleProperties.length} объектов
+              {dict.homePage.found} {sampleProperties.length} {dict.homePage.foundObjects}
             </div>
           </div>
 
@@ -161,7 +161,7 @@ export default function HomePageClient({ dict, lang }: { dict: any, lang: string
           <div className="flex justify-center mt-8">
             <div className="flex space-x-2">
               <button className="px-3 py-2 border border-gray-300 rounded-sm text-gray-600 hover:bg-gray-50">
-                ← Предыдущая
+                {dict.homePage.prevPage}
               </button>
               <button className="px-3 py-2 bg-primary-600 text-white rounded-sm">
                 1
@@ -173,7 +173,7 @@ export default function HomePageClient({ dict, lang }: { dict: any, lang: string
                 3
               </button>
               <button className="px-3 py-2 border border-gray-300 rounded-sm text-gray-600 hover:bg-gray-50">
-                Следующая →
+                {dict.homePage.nextPage}
               </button>
             </div>
           </div>
@@ -186,43 +186,43 @@ export default function HomePageClient({ dict, lang }: { dict: any, lang: string
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-lg font-medium text-gray-900 mb-4">
-                idealista.ge
+                {dict.homePage.footerTitle}
               </h3>
               <p className="text-gray-600 text-sm">
-                Поиск недвижимости в Грузии
+                {dict.homePage.footerDescription}
               </p>
             </div>
             
             <div>
-              <h4 className="font-medium text-gray-900 mb-3">Покупателям</h4>
+              <h4 className="font-medium text-gray-900 mb-3">{dict.homePage.buyersTitle}</h4>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-primary-600">Квартиры</a></li>
-                <li><a href="#" className="hover:text-primary-600">Дома</a></li>
-                <li><a href="#" className="hover:text-primary-600">Новостройки</a></li>
+                <li><a href="#" className="hover:text-primary-600">{dict.homePage.apartments}</a></li>
+                <li><a href="#" className="hover:text-primary-600">{dict.homePage.houses}</a></li>
+                <li><a href="#" className="hover:text-primary-600">{dict.homePage.newBuildings}</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-medium text-gray-900 mb-3">Арендаторам</h4>
+              <h4 className="font-medium text-gray-900 mb-3">{dict.homePage.rentersTitle}</h4>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-primary-600">Аренда квартир</a></li>
-                <li><a href="#" className="hover:text-primary-600">Аренда домов</a></li>
-                <li><a href="#" className="hover:text-primary-600">Краткосрочная аренда</a></li>
+                <li><a href="#" className="hover:text-primary-600">{dict.homePage.apartmentRental}</a></li>
+                <li><a href="#" className="hover:text-primary-600">{dict.homePage.houseRental}</a></li>
+                <li><a href="#" className="hover:text-primary-600">{dict.homePage.shortTermRental}</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-medium text-gray-900 mb-3">Помощь</h4>
+              <h4 className="font-medium text-gray-900 mb-3">{dict.homePage.helpTitle}</h4>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-primary-600">Контакты</a></li>
-                <li><a href="#" className="hover:text-primary-600">Помощь</a></li>
-                <li><a href="#" className="hover:text-primary-600">О нас</a></li>
+                <li><a href="#" className="hover:text-primary-600">{dict.homePage.contacts}</a></li>
+                <li><a href="#" className="hover:text-primary-600">{dict.homePage.help}</a></li>
+                <li><a href="#" className="hover:text-primary-600">{dict.homePage.aboutUs}</a></li>
               </ul>
             </div>
           </div>
           
           <div className="border-t mt-8 pt-8 text-center text-sm text-gray-600">
-            <p>&copy; 2024 idealista.ge. Все права защищены.</p>
+            <p>{dict.homePage.copyright}</p>
           </div>
         </div>
       </footer>

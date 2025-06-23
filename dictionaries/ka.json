@@ -5,9 +5,34 @@
     "buy": "ყიდვა",
     "rent": "ქირავდება",
     "share": "გაზიარება",
-    "myArea": "ჩემი სივრცე",
+    "myArea": "ჩემი ფართობი",
     "signIn": "შესვლა",
     "placeAd": "განცხადების განთავსება"
+  },
+  "homePage": {
+    "heroTitle": "უძრავი ქონების ძიება საქართველოში",
+    "heroSubtitle": "იპოვეთ თქვენი ოცნების ბინა ან სახლი ათასობით შეთავაზებას შორის",
+    "mapSearchTitle": "ძიება რუკაზე",
+    "recommendedTitle": "რეკომენდებული ობიექტები",
+    "foundObjects": "ობიექტი",
+    "found": "ნაპოვნია",
+    "prevPage": "← წინა",
+    "nextPage": "შემდეგი →",
+    "footerTitle": "dedamitsa.ge",
+    "footerDescription": "უძრავი ქონების ძიება საქართველოში",
+    "buyersTitle": "მყიდველებისთვის",
+    "apartments": "ბინები",
+    "houses": "სახლები",
+    "newBuildings": "ახალი შენობები",
+    "rentersTitle": "დამქირავებლებისთვის",
+    "apartmentRental": "ბინების ქირავება",
+    "houseRental": "სახლების ქირავება",
+    "shortTermRental": "მოკლევადიანი ქირავება",
+    "helpTitle": "დახმარება",
+    "contacts": "კონტაქტები",
+    "help": "დახმარება",
+    "aboutUs": "ჩვენ შესახებ",
+    "copyright": "© 2025 dedamitsa.ge. ყველა უფლება დაცულია."
   },
   "searchForm": {
     "buy": "ყიდვა",
@@ -15,14 +40,15 @@
     "placeholder": "ძიება ქალაქის, რაიონის, ქუჩის მიხედვით...",
     "allGeorgia": "მთელი საქართველო",
     "search": "ძიება",
-    "advancedSearch": "+ დეტალური ძიება",
+    "advancedSearch": "+ გაფართოებული ძიება",
     "houses": "სახლები",
     "apartments": "ბინები",
     "newBuildings": "ახალი შენობები",
-    "byTheSea": "ზღვასთან ახლოს"
+    "byTheSea": "ზღვისპირა"
   },
   "postAdPage": {
-    "title": "განათავსეთ თქვენი განცხადება უფასოდ"
+    "title": "განათავსეთ თქვენი განცხადება უფასოდ",
+    "home": "მთავარი"
   },
   "postAdForm": {
     "step": "ნაბიჯი",
@@ -69,8 +95,15 @@
     "condition_new": "ახალი რემონტი",
     "condition_good": "კარგი",
     "condition_medium": "საშუალო",
-    "condition_needs_repair": "სარემონტო",
+    "condition_needs_repair": "საჭიროებს რემონტს",
     "condition_black_frame": "შავი კარკასი",
-    "condition_white_frame": "თეთრი კარკასი"
+    "condition_white_frame": "თეთრი კარკასი",
+    "next_btn": "შემდეგი",
+    "back_btn": "უკან",
+    "publish_btn": "განცხადების განთავსება",
+    "publishing": "ვაქვეყნებთ...",
+    "success_title": "განცხადება წარმატებით განთავსდა!",
+    "success_message": "თქვენი განცხადება გადის მოდერაციას და მალე გამოჩნდება საიტზე.",
+    "redirect_message": "რამდენიმე წამში თქვენ გადამისამართდებით მთავარ გვერდზე..."
   }
 } 

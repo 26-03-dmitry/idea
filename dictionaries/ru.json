@@ -9,6 +9,31 @@
     "signIn": "Войти",
     "placeAd": "Разместить объявление"
   },
+  "homePage": {
+    "heroTitle": "Поиск недвижимости в Грузии",
+    "heroSubtitle": "Найдите квартиру или дом своей мечты среди тысяч предложений",
+    "mapSearchTitle": "Поиск на карте",
+    "recommendedTitle": "Рекомендуемые объекты",
+    "foundObjects": "объектов",
+    "found": "Найдено",
+    "prevPage": "← Предыдущая",
+    "nextPage": "Следующая →",
+    "footerTitle": "dedamitsa.ge",
+    "footerDescription": "Поиск недвижимости в Грузии",
+    "buyersTitle": "Покупателям",
+    "apartments": "Квартиры",
+    "houses": "Дома",
+    "newBuildings": "Новостройки",
+    "rentersTitle": "Арендаторам",
+    "apartmentRental": "Аренда квартир",
+    "houseRental": "Аренда домов",
+    "shortTermRental": "Краткосрочная аренда",
+    "helpTitle": "Помощь",
+    "contacts": "Контакты",
+    "help": "Помощь",
+    "aboutUs": "О нас",
+    "copyright": "© 2025 dedamitsa.ge. Все права защищены."
+  },
   "searchForm": {
     "buy": "Купить",
     "rent": "Аренда",
@@ -22,7 +47,8 @@
     "byTheSea": "У моря"
   },
   "postAdPage": {
-    "title": "Разместите ваше объявление бесплатно"
+    "title": "Разместите ваше объявление бесплатно",
+    "home": "Главная"
   },
   "postAdForm": {
     "step": "Шаг",
@@ -82,16 +108,21 @@
     "south": "Юг",
     "east": "Восток",
     "west": "Запад",
-    "has_lift": "Лифт",
-    "has_gas": "Газ", 
-    "has_internet": "Интернет",
-    "is_furnished": "Мебель",
-    "bathrooms": "Ванные комнаты",
+    "elevator": "Лифт",
+    "gas": "Газ",
+    "security": "Охрана",
+    "cctv": "Видеонаблюдение",
     "maintenance_cost": "Стоимость содержания дома",
     "maintenance_cost_hint": "пожалуйста укажите валюту оплаты",
     "yes": "Да",
     "no": "Нет",
     "currency_gel": "₾",
-    "currency_usd": "$"
+    "currency_usd": "$",
+    "bathrooms": "Количество ванных",
+    "description_hint_detail": "постарайтесь подробнее описать достоинства - это залог быстрой и успешной продажи",
+    "publishing": "Публикуем...",
+    "success_title": "Объявление успешно размещено!",
+    "success_message": "Ваше объявление проходит модерацию и скоро появится на сайте.",
+    "redirect_message": "Через несколько секунд вы будете перенаправлены на главную страницу..."
   }
 } 

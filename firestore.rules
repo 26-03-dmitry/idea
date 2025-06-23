@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Разрешаем чтение и запись в коллекцию properties для всех пользователей
+    match /properties/{document} {
+      allow read, write: if true;
+    }
+    
+    // Для всех остальных коллекций запрещаем доступ
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+} 

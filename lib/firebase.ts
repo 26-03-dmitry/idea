@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,8 +15,34 @@ const firebaseConfig = {
   measurementId: "G-RQWCT0NQNT"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Проверяем, запущен ли сайт статически
+const isStaticSite = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
 
-// Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app); 
+let app: any = null;
+let auth: any = null;
+let db: any = null;
+let storage: any = null;
+
+try {
+  // Initialize Firebase
+  app = initializeApp(firebaseConfig);
+
+  // Initialize Firebase services
+  auth = getAuth(app);
+  db = getFirestore(app);
+  storage = getStorage(app);
+  
+  if (isStaticSite) {
+    console.log('Firebase initialized for static site - some features may be limited');
+  } else {
+    console.log('Firebase initialized successfully');
+  }
+} catch (error) {
+  console.error('Firebase initialization error:', error);
+  if (isStaticSite) {
+    console.log('Firebase initialization failed on static site - this is expected');
+  }
+}
+
+export { auth, db, storage };
+export default app; 

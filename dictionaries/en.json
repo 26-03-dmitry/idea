@@ -5,9 +5,34 @@
     "buy": "Buy",
     "rent": "Rent",
     "share": "Share",
-    "myArea": "My area",
-    "signIn": "Sign in",
-    "placeAd": "Place an ad"
+    "myArea": "My Area",
+    "signIn": "Sign In",
+    "placeAd": "Place Ad"
+  },
+  "homePage": {
+    "heroTitle": "Real Estate Search in Georgia",
+    "heroSubtitle": "Find your dream apartment or house among thousands of offers",
+    "mapSearchTitle": "Search on Map",
+    "recommendedTitle": "Recommended Properties",
+    "foundObjects": "properties",
+    "found": "Found",
+    "prevPage": "← Previous",
+    "nextPage": "Next →",
+    "footerTitle": "dedamitsa.ge",
+    "footerDescription": "Real Estate Search in Georgia",
+    "buyersTitle": "For Buyers",
+    "apartments": "Apartments",
+    "houses": "Houses",
+    "newBuildings": "New Buildings",
+    "rentersTitle": "For Renters",
+    "apartmentRental": "Apartment Rental",
+    "houseRental": "House Rental", 
+    "shortTermRental": "Short-term Rental",
+    "helpTitle": "Help",
+    "contacts": "Contacts",
+    "help": "Help",
+    "aboutUs": "About Us",
+    "copyright": "© 2025 dedamitsa.ge. All rights reserved."
   },
   "searchForm": {
     "buy": "Buy",
@@ -15,14 +40,15 @@
     "placeholder": "Search by city, district, street...",
     "allGeorgia": "All Georgia",
     "search": "Search",
-    "advancedSearch": "+ Advanced search",
+    "advancedSearch": "+ Advanced Search",
     "houses": "Houses",
     "apartments": "Apartments",
-    "newBuildings": "New buildings",
-    "byTheSea": "By the sea"
+    "newBuildings": "New Buildings",
+    "byTheSea": "By the Sea"
   },
   "postAdPage": {
-    "title": "Place your ad for free"
+    "title": "Post Your Ad for Free",
+    "home": "Home"
   },
   "postAdForm": {
     "step": "Step",
@@ -71,6 +97,13 @@
     "condition_medium": "Fair",
     "condition_needs_repair": "Needs repair",
     "condition_black_frame": "Black frame",
-    "condition_white_frame": "White frame"
+    "condition_white_frame": "White frame",
+    "next_btn": "Next",
+    "back_btn": "Back",
+    "publish_btn": "Publish Listing",
+    "publishing": "Publishing...",
+    "success_title": "Listing Successfully Posted!",
+    "success_message": "Your listing is under review and will appear on the site soon.",
+    "redirect_message": "You will be redirected to the homepage in a few seconds..."
   }
 } 
