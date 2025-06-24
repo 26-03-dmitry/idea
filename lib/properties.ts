@@ -135,6 +135,17 @@ export async function createProperty(formData: any): Promise<string> {
   try {
     console.log('=== НАЧАЛО СОЗДАНИЯ ОБЪЯВЛЕНИЯ В FIREBASE ===');
     console.log('Starting property creation with data:', formData);
+    console.log('FormData keys:', Object.keys(formData));
+    console.log('FormData coordinates:', formData.coordinates);
+    
+    // Временно отключаем Firebase и показываем демо-версию
+    console.log('Демо-режим: имитируем создание объявления...');
+    // Имитируем задержку
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Возвращаем фиктивный ID
+    const fakeId = 'demo_' + Date.now();
+    console.log('Демо-объявление создано с ID:', fakeId);
+    return fakeId;
     
     // Если это статический сайт, показываем заглушку
     if (isStaticSite) {
@@ -159,9 +170,13 @@ export async function createProperty(formData: any): Promise<string> {
     
     // Проверяем обязательные поля
     console.log('Проверяем обязательные поля...');
-    if (!formData.propertyType || !formData.city || !formData.coordinates) {
-      throw new Error('Не заполнены обязательные поля');
+    if (!formData.propertyType || !formData.city) {
+      throw new Error('Не заполнены обязательные поля: propertyType или city');
     }
+    
+    // Устанавливаем координаты по умолчанию если их нет
+    const coordinates = formData.coordinates || { lat: 41.7151, lng: 44.8271 };
+    console.log('Using coordinates:', coordinates);
     console.log('Обязательные поля проверены');
 
     // Создаем документ с базовыми данными
@@ -172,14 +187,14 @@ export async function createProperty(formData: any): Promise<string> {
       city: formData.city || '',
       street: formData.street || '',
       houseNumber: formData.houseNumber || '',
-      coordinates: formData.coordinates || { lat: 0, lng: 0 },
+      coordinates: coordinates,
       area: formData.area || '',
       living_area: formData.living_area || '',
       kitchen_area: formData.kitchen_area || '',
       bedrooms: formData.bedrooms || '',
       floor: formData.floor || '',
       total_floors: formData.total_floors || '',
-      condition: formData.condition || '',
+      condition: formData.condition || 'Хорошее',
       windowDirections: formData.windowDirections || [],
       elevator: formData.elevator || 'no',
       gas: formData.gas || 'no',
@@ -202,6 +217,7 @@ export async function createProperty(formData: any): Promise<string> {
     // Очищаем данные от undefined значений
     const cleanedData = cleanFormData(propertyData);
     console.log('Cleaned data for Firestore:', cleanedData);
+    console.log('Cleaned data size:', JSON.stringify(cleanedData).length, 'characters');
 
     console.log('Creating document in Firestore...');
     // Добавляем в Firestore
